@@ -1,0 +1,70 @@
+<!doctype html>
+<script src="/js/jquery/jquery.min.js"></script>
+<script src="/src/auth_base.js"></script>
+<script src="/src/constants.js"></script>
+<script src="page_action.js"></script>
+<style type="text/css">
+    #mainPopup {
+        padding: 10px;
+        min-height: 200px;
+        width: 400px;
+        font-family: Helvetica, Ubuntu, Arial, sans-serif;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .list-li {
+        line-height: 40px;
+    }
+    ::selection{background:#39f;color:#fff;text-shadow:none;}
+    .uk-button{margin:0;border:none;overflow:visible;font:inherit;color:inherit;text-transform:none;-webkit-appearance:none;border-radius:0;display:inline-block;box-sizing:border-box;padding:0 30px;vertical-align:middle;font-size:.875rem;line-height:38px;text-align:center;text-decoration:none;text-transform:uppercase;transition:.1s ease-in-out;transition-property:color,background-color,border-color;}
+    .uk-button::-moz-focus-inner{border:0;padding:0;}
+    .uk-button:hover{text-decoration:none;}
+    .uk-button:focus{outline:0;}
+    .uk-button-primary{background-color:#1e87f0;color:#fff;border:1px solid transparent;}
+    .uk-button-primary:focus,.uk-button-primary:hover{background-color:#0f7ae5;color:#fff;}
+    .uk-button-primary:active{background-color:#0e6dcd;color:#fff;}
+    #success-icon-holder {
+        height: 224px;
+    }
+    #success {
+        text-align: center;
+    }
+</style>
+
+<div id="success" style="display: none;">
+    <div id="success-icon-holder">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180pt" height="180pt" viewBox="0 0 180 180" version="1.1">
+            <g id="surface1">
+            <path style=" stroke:none;fill-rule:nonzero;fill:green;fill-opacity:1;" d="M 90 15 C 48.601562 15 15 48.601562 15 90 C 15 131.398438 48.601562 165 90 165 C 131.398438 165 165 131.398438 165 90 C 165 48.601562 131.398438 15 90 15 Z M 90 150 C 56.925781 150 30 123.074219 30 90 C 30 56.925781 56.925781 30 90 30 C 123.074219 30 150 56.925781 150 90 C 150 123.074219 123.074219 150 90 150 Z M 124.425781 56.851562 L 75 106.273438 L 55.574219 86.925781 L 45 97.5 L 75 127.5 L 135 67.5 Z M 124.425781 56.851562 "/>
+            </g>
+            </svg>
+         </div>
+         <a target="_blank" class="uk-button" href="#" id="success-list-link">See the Pack</a>
+</div>
+<div id="mainPopup">
+    <h1>Add this URL</h1>
+    <button class="uk-button uk-button-primary" id="add-to-new-pack-button">To a new Pack</button>
+    <hr>
+    <h2>To an existing pack</h2>
+    <ul id="existing-packs">
+
+    </ul>
+    <button class="uk-button uk-button-primary" 
+    id="reload-button"
+    style="float:right">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             style="position: relative;top: 5px;background-size: 180px 180px;"
+             height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+                  fill="white"/></svg>
+    </button>
+</div>
+<div id="login">
+    <a class="uk-button uk-button-primary" 
+    id="login-button"
+    target="_blank" 
+    href="#"
+    style="margin: 30px;">Login</a>
+</div>

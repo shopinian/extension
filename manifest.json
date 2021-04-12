@@ -1,0 +1,48 @@
+{
+  "name": "Shopinian",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "This is a powerful extension to add any web page to your packs on Shopinian.com",
+  "homepage_url": "https://shopinian.com/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "js/jquery/jquery.min.js",
+      "src/constants.js",
+      "src/auth_base.js",
+      "src/bg/background.js"
+    ],
+    "persistent": true
+  },
+  "options_page": "src/options/index.html",
+  "browser_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "Add this URL to a pack",
+    "default_popup": "src/page_action/page_action.html"
+  },
+  "permissions": [
+    "*://*/*",
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "src/constants.js",
+        "js/jquery/jquery.min.js",
+        "src/auth_base.js",
+        "src/inject/auth.js",
+        "src/inject/inject.js"
+      ]
+    }
+  ]
+}
