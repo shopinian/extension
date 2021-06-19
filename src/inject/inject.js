@@ -1,3 +1,6 @@
+const sdMap = {'//meta[@property="og:type"]/@content': 'product'};
+const iconUrl = chrome.runtime.getURL('icons/icon48.png');
+
 chrome.extension.sendMessage({}, function(response) {
 	var readyStateCheckInterval = setInterval(function() {
 	if (document.readyState === "complete") {
@@ -11,12 +14,6 @@ function injectIfNeeded() {
 		const key = window.location.origin;
 		console.log("Checking if we have data for: " + key);
 		const siteData = sitesData.injectableSiteData[key];
-		if (!siteData) {
-			console.log(":(");
-			return;
-		}
-		console.log("Found the data for this site");
-		console.dir(siteData);
 		if (checkIfDetail(siteData)) {
 			console.log("Looks like this is the detail page");
 			injectToDetailPage(siteData);
@@ -53,22 +50,41 @@ function getFirstElementByXPath(xpath, parent) {
 }
 
 function checkIfDetail(siteData) {
-	if (!siteData.itemDetailURLPattern) {
-		return false;
+	if (siteData && siteData.itemDetailURLPattern) {
+		console.log("Checking if " + window.location.pathname + " matches " + siteData.itemDetailURLPattern);
+		if(window.location.pathname.match(new RegExp(siteData.itemDetailURLPattern))) {
+			return true;
+		}
 	}
-	console.log("Checking if " + window.location.pathname + " matches " + siteData.itemDetailURLPattern);
-	return window.location.pathname.match(new RegExp(siteData.itemDetailURLPattern));
+	return checkIfItem();
 }
 
 function checkIfList(siteData) {
-	if (!siteData.listURLPattern) {
+	if (!siteData || !siteData.listURLPattern) {
 		return false;
 	}
 	return window.location.pathname.match(new RegExp(siteData.listURLPattern));
 }
 
+function checkIfItem() {
+	for (let xpath in sdMap) {
+		if (sdMap.hasOwnProperty(xpath)) {
+			let target = sdMap[xpath];
+			let valueEl = getFirstElementByXPath(xpath);
+			if (valueEl && valueEl.value === target) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 function injectToDetailPage(siteData) {
-	let injectionXpath = siteData.itemDetailInjectionPlaceXpath;
+	console.log("injecting the Shopinian button to the detail page");
+	let injectionXpath = false;
+	if (siteData) {
+		injectionXpath = siteData.itemDetailInjectionPlaceXpath;
+	}
 	if (injectionXpath) {
 		console.log("We have an injection place xPath");
 		let injectionPlace = getFirstElementByXPath(injectionXpath);
@@ -82,7 +98,7 @@ function injectToDetailPage(siteData) {
 			$("<a/>", {
 				"href": baseURL + "/ext/add?url=" + window.location.href,
 				"target": "_blank",
-				"text": "Add To Pack"
+				"text": "Add To List"
 			}).appendTo(wrp);
 			wrp.appendTo(injectionPlace);
 			return;
@@ -93,20 +109,32 @@ function injectToDetailPage(siteData) {
 	addPopup.css({
 		"display": "inline-block",
 		"position": "fixed",
-		"top": "100px",
+		"top": "121px",
 		"right": "0",
-		"width": "68px",
-		"height": "78px",
+		"width": "80px",
+		"height": "110px",
 		"border-radius": "4px",
 		"z-index": "99999",
 		"background-color": "#ffe5ff",
-		"padding": "10px"
+		"padding": "10px 10px 10px 17px",
+		"text-align": "center"
 	});
-	$("<a/>", {
+
+	let addButton = $("<a/>", {
 		"href": baseURL + "/ext/add?url=" + window.location.href,
 		"target": "_blank",
-		"text": "Add To Pack"
-	}).appendTo(addPopup);
+	});
+	let icon = $("<img/>", {
+		"alt": "Shopinian icon",
+		"src": iconUrl
+	});
+	icon.appendTo(addButton);
+	let buttonText = $("<span/>", {
+		"text": "Add to List"
+	});
+	buttonText.appendTo(addButton);
+
+	addButton.appendTo(addPopup);
 	addPopup.appendTo("body");
 }
 

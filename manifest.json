@@ -1,14 +1,17 @@
 {
   "name": "Shopinian",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
-  "description": "This is a powerful extension to add any web page to your packs on Shopinian.com",
+  "description": "Add any item to your shortlist on Shopinian with just 1 click!",
   "homepage_url": "https://shopinian.com/",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "web_accessible_resources": [
+    "icons/icon48.png"
+  ],
   "default_locale": "en",
   "background": {
     "scripts": [
